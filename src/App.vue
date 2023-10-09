@@ -4,31 +4,31 @@ import { useDark, useToggle } from '@vueuse/core';
 import { useUserStore } from "./stores/user";
 // import CustomHeader from './components/CustomHeader.vue';
 
-// const userStore = useUserStore();
+const userStore = useUserStore();
 
-// const isDark = useDark(
-//   {
-//     selector: 'body',
-//     // attribute: 'b-dark',
-//     valueDark: 'bd-dark',
-//     valueLight: 'bd-light',
-//   },
-//   {
-//     selector: 'a',
-//     // attribute: 'b-dark',
-//     valueDark: 'bd-dark',
-//     valueLight: 'bd-light',
-//   },
+const isDark = useDark(
+  {
+    selector: 'body',
+    // attribute: 'b-dark',
+    valueDark: 'bd-dark',
+    valueLight: 'bd-light',
+  },
+  {
+    selector: 'a',
+    // attribute: 'b-dark',
+    valueDark: 'bd-dark',
+    valueLight: 'bd-light',
+  },
 
-//   )
-// const toggleDark = useToggle(isDark)
+  )
+const toggleDark = useToggle(isDark)
 
 </script>
 
 <template>
 <!-- <CustomHeader :isDark="isDark" @toggleDark="toggleDark"
   class="container my-2 p-4" :class="isDark ? 'bg-dark' : 'bg-light'"/> -->
-<div>Veamos</div>
+<div>Veamos2</div>
 <!-- <div>{{userStore}}</div> -->
 
 <div class="container-fluid">
