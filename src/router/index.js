@@ -1,5 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '@/views/HomeView.vue'
+import { useUserStore } from '@/stores/user'
+
+const requireAuth = async (to, from, next) => {
+  const userStore = useUserStore();
+  userStore.loading = true;
+  const user = await userStore.currentUser();
+  if (user) {
+      next();
+  } else {
+      next("/login");
+  }
+  userStore.loading = false;
+};
+
+const requireNoAuth = async (to, from, next) => {
+  const userStore = useUserStore();
+  userStore.loading = true;
+  const user = await userStore.currentUser();
+  if (user) {
+      next("/about");
+  } else {
+      next();
+  }
+  userStore.loading = false;
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +33,17 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/Login.vue'),
+      beforeEnter: requireNoAuth,
+    },{
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/Register.vue'),
+      beforeEnter: requireNoAuth,
     },
     {
       path: '/about',
