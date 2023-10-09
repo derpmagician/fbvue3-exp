@@ -29,7 +29,7 @@ const toggleDark = useToggle(isDark)
 <!-- <CustomHeader :isDark="isDark" @toggleDark="toggleDark"
   class="container my-2 p-4" :class="isDark ? 'bg-dark' : 'bg-light'"/> -->
 <div>Veamos2</div>
-<!-- <div>{{userStore}}</div> -->
+<div>{{userStore}}</div>
 
 <div class="container-fluid">
 
