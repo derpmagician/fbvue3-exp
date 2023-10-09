@@ -5,7 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: import.meta.env.MODE === 'production' ? '/fbvue3-exp/' : './',
+  base: process.env.NODE_ENV === 'production' ? '/fbvue3-exp/' : './',
   minify: false,
   plugins: [
     vue(),
