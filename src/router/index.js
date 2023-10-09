@@ -55,6 +55,18 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/editlink/:id',
+      name: 'editlink',
+      component: () => import('../views/EditLink.vue'),
+      beforeEnter: requireAuth,
+    },    
+    {
+      path: '/cssexperiment',
+      name: 'cssexperiment',
+      component: () => import('../views/CssExperimentView.vue'),
+      beforeEnter: requireAuth,
     }
   ]
 })
