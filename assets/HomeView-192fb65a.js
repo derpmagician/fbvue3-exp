@@ -1,0 +1,1 @@
+import{o as _,c as a,a as o}from"./index-9685bee2.js";const r={__name:"TheWelcome",setup(e){return(c,t)=>" welcome "}},s={__name:"HomeView",setup(e){return(c,t)=>(_(),a("main",null,[o(r)]))}};export{s as default};
