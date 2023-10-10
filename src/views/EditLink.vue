@@ -25,7 +25,7 @@ const handleSubmit = async () => {
     url.value = await databaseStore.updateUrl(route.params.id, url.value)
     const { triggerToast } = useTriggerToast("success");
     triggerToast();
-    router.push("/about")
+    router.push("/savedlinks")
   } else {
     const { triggerToast } = useTriggerToast("error");
     triggerToast();

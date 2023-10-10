@@ -2,9 +2,9 @@
 import { RouterLink, RouterView } from 'vue-router';
 import { useDark, useToggle } from '@vueuse/core';
 import { useUserStore } from "./stores/user";
-import CustomHeader from './components/CustomHeader.vue';
+import CustomHeader from '@/components/CustomHeader.vue';
 
-const userStore = useUserStore();
+// const userStore = useUserStore();
 
 const isDark = useDark(
   {
@@ -28,8 +28,8 @@ const toggleDark = useToggle(isDark)
 <template>
 <CustomHeader :isDark="isDark" @toggleDark="toggleDark"
   class="container my-2 p-4" :class="isDark ? 'bg-dark' : 'bg-light'"/>
-<div>App</div>
-<div>{{userStore.loading}}</div>
+<div>Veamos</div>
+<!-- <div>{{userStore}}</div> -->
 
 <div class="container-fluid">
 

@@ -5,7 +5,6 @@ import ImageComparison from '@/components/ImageComparison.vue';
 </script>
 
 <template>
-<div>sdd</div>
 <!-- <div class="hstack gap-3"> -->
 <div class="container d-flex align-items-center justify-content-center fw-bold">
   <ObjView class="mb-3" />

@@ -6,13 +6,11 @@ const sliderValue = ref(50);
 
 <template>
   <div class="row mb-3">
-    Image Comparison Slider
+    Image Comparison Slider {{ sliderValue }}
   </div>
   <div class="row">
     <div class="wrapper">
       <div class="images">
-        <!-- <img class="img-1" src="/im-a.png">
-        <img class="img-2" :style="{ width: sliderValue + '%' }" src="/im-b.png"> -->
         <div class="img-1" ></div>
         <div class="img-2" :style="{ width: sliderValue + '%' }" ></div>
       </div>

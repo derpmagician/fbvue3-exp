@@ -38,7 +38,7 @@ export const useUserStore = defineStore('user', () => {
         auth, email, password
       );
       userData.value = { email: user.email, uid: user.uid };
-      router.push("/about");
+      router.push("/savedlinks");
     } catch (error) {
         if (error.code === 'auth/user-not-found') {
           alert("No se encontró ningún usuario con esa dirección de correo electrónico.");

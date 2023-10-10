@@ -38,6 +38,12 @@ const router = createRouter({
       // component: HomeView
     },
     {
+      path: '/savedlinks',
+      name: 'savedlinks',
+      component: () => import('../views/SavedLinks.vue'),
+      // beforeEnter: requireNoAuth,
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('../views/Login.vue'),

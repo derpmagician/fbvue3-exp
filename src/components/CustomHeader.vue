@@ -18,8 +18,11 @@ defineEmits(['toggleDark'])
         <router-link to="/" class="btn col me-2" 
           :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Home
         </router-link>
+        <router-link to="/savedlinks" class="btn col me-2" 
+          :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Saved Links
+        </router-link>
         <router-link to="/cssexperiment" class="btn col me-2"
-          :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">Css Experiment
+          :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">Css Experiments
         </router-link>
         <router-link to="/about" class="btn col me-2"
           :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">About
