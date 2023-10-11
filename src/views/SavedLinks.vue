@@ -35,14 +35,15 @@ const handleSubmit = () => {
 </script>
 <template>
   <div class="savedl">
-    <h1>Mi List of Saved Links</h1>
-    <h2>{{userStore.userData}}</h2>
+    <h2>Mi List of Saved Links</h2>
+    <h3>{{userStore.userData}}</h3>
     <br />
     <div>
 
       <form @submit.prevent="handleSubmit">
         <input type="text" placeholder="Ingrese Url" v-model="url" />
-        <button type="submit" >Agregar</button>
+        <button type="submit" class="btn col me-2"
+            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Agregar</button>
       </form>
     </div>
 
@@ -51,8 +52,10 @@ const handleSubmit = () => {
       <ul >
         <li v-for="item of databaseStore.documents" :key="item?.id">
           {{item?.name}} <br /> {{ item?.short }}<br /> 
-          <button @click="router.push(`/editlink/${item.id}`)">Editar</button>
-          <button @click="databaseStore.deleteUrl(item.id)">Eliminar</button>
+          <button @click="router.push(`/editlink/${item.id}`)" class="btn col me-2"
+            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Edit</button>
+          <button @click="databaseStore.deleteUrl(item.id)" class="btn col me-2"
+            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-danger'">Delete</button>
         </li>
       </ul>
     </div>
