@@ -1,0 +1,1 @@
+import{m as e,p as a}from"./index-a4e5f32f.js";const n=t=>({isValidUrl:e(()=>/^(http|https):\/\/[^ "]+$/.test(t.value))});const i=t=>{let s;switch(t){case"error":s="Ingrese un enlace valido";break;case"success":s="Enlace añadido";break}return{triggerToast:()=>{a(s,{type:t,position:"top-right",autoClose:1e3})}}};export{i as a,n as u};
