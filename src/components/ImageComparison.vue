@@ -26,10 +26,13 @@ const sliderValue = ref(50);
 </template>
 
 <style scope>
+.row {
+  width: 100%;
+}
 .wrapper{
   position: relative;
   height: 500px;
-  width: 750px;
+  width: 100%;
   overflow: hidden;
   background: #fff;
   border: 7px solid #fff;

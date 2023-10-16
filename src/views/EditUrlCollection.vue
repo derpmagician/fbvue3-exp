@@ -1,8 +1,8 @@
-// views/EditLink.vue
+// views/EditUrlCollection.vue
 <script setup>
 import { onMounted, ref } from "vue";
 import { useRoute, useRouter  } from 'vue-router';
-import { useDatabaseStore } from "../stores/database";
+import { useUrlStore } from "../stores/colUrls";
 import { useIsValidUrl } from '@/composables/isValidUrl.js';
 import { useTriggerToast } from '@/composables/triggerToast.js';
 
@@ -14,24 +14,24 @@ const props = defineProps({
 
 const route = useRoute();
 const router = useRouter()
-const databaseStore = useDatabaseStore();
+const urlStore = useUrlStore();
 
 const url = ref("");
 const { isValidUrl } = useIsValidUrl(url);
 
 
 onMounted(async () => {
-  url.value = await databaseStore.leerUrl(route.params.id);
+  url.value = await urlStore.leerUrl(route.params.id);
 });
 
 
 
 const handleSubmit = async () => {
   if (isValidUrl.value) {
-    url.value = await databaseStore.updateUrl(route.params.id, url.value)
+    url.value = await urlStore.updateUrl(route.params.id, url.value)
     const { triggerToast } = useTriggerToast("success");
     triggerToast();
-    router.push("/savedlinks")
+    router.push("/urlcollection")
   } else {
     const { triggerToast } = useTriggerToast("error");
     triggerToast();

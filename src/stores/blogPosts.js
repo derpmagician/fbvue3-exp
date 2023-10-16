@@ -1,20 +1,23 @@
-// stores/database.js
+// stores/blogPosts.js
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { collection, query, where, getDoc, getDocs, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { collection, query, where, getDoc, getDocs,
+  addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import { auth } from "@/firebaseConfig";
 import { nanoid } from 'nanoid'
+import dayjs from 'dayjs';
 
-export const useDatabaseStore = defineStore('database', () => {
+
+export const useBlogPostStore = defineStore('blogpost', () => {
 
   let documents = ref([]);
   let loadingDoc = ref(false);
 
-  const getUrls = async () => {
+  const getAllBlogPosts = async () => {
     loadingDoc.value = true;
     try {
-      const q = query(collection(db, "urls"), where("user", "==", auth.currentUser.uid));
+      const q = query(collection(db, "blog"));
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -31,11 +34,31 @@ export const useDatabaseStore = defineStore('database', () => {
     }
   }
 
-  const leerUrl = async (id) => {
+  const getMyBlogPosts = async () => {
+    loadingDoc.value = true;
+    try {
+      const q = query(collection(db, "blog"), where("user", "==", auth.currentUser.uid));
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.id, " => ", doc.data());
+        documents.value.push({
+          id: doc.id,
+          ...doc.data()
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      loadingDoc.value = false;
+    }
+  }
+
+  const leerBlogPost = async (id) => {
     loadingDoc.value = true;
     try {
 
-      const docRef = doc(db, "urls", id);
+      const docRef = doc(db, "blog", id);
       const docSnap = await getDoc(docRef);
 
       if(!docSnap.exists()) {
@@ -46,7 +69,12 @@ export const useDatabaseStore = defineStore('database', () => {
         throw new Error("No es dueño del documento");
       }
 
-      return docSnap.data().name
+      // return docSnap.data().name
+      return {
+        titulo: docSnap.data().titulo,
+        detalle: docSnap.data().detalle,
+        image: docSnap.data().image,
+        date: docSnap.data().date }
 
     } catch (e) {
       console.log(e.message);
@@ -55,11 +83,11 @@ export const useDatabaseStore = defineStore('database', () => {
     }
   }
 
-   const updateUrl = async (id, name) => {
+   const updateBlogPost = async (id, titulo, detalle, image) => {
     loadingDoc.value = true;
     
     try {
-      const docRef = doc(db, "urls", id);
+      const docRef = doc(db, "blog", id);
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
@@ -68,10 +96,12 @@ export const useDatabaseStore = defineStore('database', () => {
 
       if (docSnap.data().user === auth.currentUser.uid) {
         await updateDoc(docRef, {
-            name: name,
+          titulo: titulo,
+          detalle: detalle,
+          image: image,
         });
         documents.value = documents.value.map((item) =>
-            item.id === id ? { ...item, name: name } : item
+            item.id === id ? { ...item, titulo: titulo, detalle: detalle, image: image,} : item
         );
 
       } else {
@@ -84,14 +114,14 @@ export const useDatabaseStore = defineStore('database', () => {
     }
   }
 
-  const addUrl = async (name) => {
+  const addBlogPost = async (titulo, detalle, image='') => {
     try {
       let short
       let exists;
       do {
         // Generar un nuevo valor de short
         short = nanoid(8);
-        const dbToSearch = collection(db, "urls");
+        const dbToSearch = collection(db, "blog");
         const q = query(dbToSearch, where("short", "==", short));
         const querySnapshot = await getDocs(q);
 
@@ -100,11 +130,13 @@ export const useDatabaseStore = defineStore('database', () => {
       } while (exists);
       // Ahora, 'short' contiene un valor que no existe en la base de datos
       const objetoDoc = {
-        name: name,
-        short: short,
-        user: auth.currentUser.uid
+        titulo: titulo,
+        detalle: detalle,
+        image: image,
+        user: auth.currentUser.uid,
+        date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
       }
-      const docRef = await addDoc(collection(db, "urls"), objetoDoc);
+      const docRef = await addDoc(collection(db, "blog"), objetoDoc);
       documents.value.push({
         ...objetoDoc,
         id: docRef.id,
@@ -116,9 +148,9 @@ export const useDatabaseStore = defineStore('database', () => {
     }
   }
 
-  const deleteUrl = async (id) => {
+  const deleteBlogPost = async (id) => {
     try {
-      const docRef = doc(db, "urls", id);
+      const docRef = doc(db, "blog", id);
       const docSnap = await getDoc(docRef);
       if(!docSnap.exists()) {
         throw new Error("doc no existe");
@@ -128,7 +160,7 @@ export const useDatabaseStore = defineStore('database', () => {
         throw new Error("No es dueño del documento");
       }
 
-      await deleteDoc(doc(db, "urls", id));
+      await deleteDoc(doc(db, "blog", id));
       documents.value = documents.value.filter(doc => doc.id !== id)
 
     } catch (e) {
@@ -139,10 +171,11 @@ export const useDatabaseStore = defineStore('database', () => {
   return {
     documents,
     loadingDoc,
-    getUrls,
-    leerUrl,
-    updateUrl,
-    addUrl,
-    deleteUrl,
+    getAllBlogPosts,
+    getMyBlogPosts,
+    leerBlogPost,
+    updateBlogPost,
+    addBlogPost,
+    deleteBlogPost,
   }
 })

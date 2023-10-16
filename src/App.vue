@@ -1,3 +1,4 @@
+// App.vue
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
 import { useDark, useToggle } from '@vueuse/core';

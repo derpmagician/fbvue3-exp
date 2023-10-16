@@ -41,7 +41,7 @@ const router = createRouter({
       path: '/savedlinks',
       name: 'savedlinks',
       component: () => import('../views/SavedLinks.vue'),
-      // beforeEnter: requireNoAuth,
+      beforeEnter: requireAuth,
     },
     {
       path: '/login',
@@ -67,11 +67,35 @@ const router = createRouter({
       name: 'editlink',
       component: () => import('../views/EditLink.vue'),
       beforeEnter: requireAuth,
-    },    
+    },
     {
       path: '/cssexperiment',
       name: 'cssexperiment',
       component: () => import('../views/CssExperimentView.vue'),
+      // beforeEnter: requireAuth,
+    },
+    {
+      path: '/urlcollection',
+      name: 'Urlcollection',
+      component: () => import('../views/UrlCollection.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/editurlcollection:id',
+      name: 'editurlcollection',
+      component: () => import('../views/EditUrlCollection.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/blog',
+      name: 'blog',
+      component: () => import('../views/Blog.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
+      path: '/editblog/:id',
+      name: 'editblog',
+      component: () => import('../views/EditBlog.vue'),
       beforeEnter: requireAuth,
     }
   ]

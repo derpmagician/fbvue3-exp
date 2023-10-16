@@ -1,3 +1,4 @@
+// views/SavedLinks.vue
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -6,9 +7,13 @@ import { useDatabaseStore } from '@/stores/database';
 import { useIsValidUrl } from '@/composables/isValidUrl.js';
 import { useTriggerToast } from '@/composables/triggerToast.js';
 
+const props = defineProps({
+  isDark: {
+    type: Boolean,
+  },
+})
+
 const userStore = useUserStore();
-
-
 const router = useRouter();
 
 const databaseStore = useDatabaseStore();

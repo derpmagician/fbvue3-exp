@@ -1,3 +1,4 @@
+// components/CustomHeader.vue
 <script setup>
 import { useUserStore } from "@/stores/user"
 
@@ -15,40 +16,47 @@ defineEmits(['toggleDark'])
   <header >
     <nav class="row " >
       <ul class="d-flex" v-if="!useUserStore.loading" >
-        <li>
-          <router-link to="/" class="btn col me-2" 
+        <li >
+          <router-link to="/" class="btn col me-2" tabindex="1"
             :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Home
           </router-link>
         </li>
-        <li>
-          <router-link to="/savedlinks" class="btn col me-2" 
-            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Saved Links
+        <li >
+          <router-link to="/blog" class="btn col me-2" tabindex="1"
+            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Blog
           </router-link>
         </li>
         <li>
-          <router-link to="/cssexperiment" class="btn col me-2"
-            :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">Css Experiments
+          <router-link to="/savedlinks" class="btn col me-2" tabindex="2"
+            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">My Links
           </router-link>
         </li>
         <li>
-          <router-link to="/about" class="btn col me-2"
+          <router-link to="/cssexperiment" class="btn col me-2"  tabindex="3"
+            :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">Css tricks
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/about" class="btn col me-2"  tabindex="5"
             :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">About
           </router-link>
         </li>
-
+        <li>
+          <router-link to="/urlcollection" class="btn col me-2"  tabindex="6"
+            :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">My Urls
+          </router-link>
+        </li>
         <li>
           <input type="checkbox" id="swc" class="swc-checkbox"
             :checked="isDark" @change="$emit('toggleDark')">
-          <label for="swc" class="swc-label">
+          <label for="swc" class="swc-label me-2"  aria-label="cambio de modo oscuro"  tabindex="7">
             <span class="swc-inner"></span>
-            <!-- <span class="swc-switch-mask"></span> -->
             <span class="swc-switch"></span>
             <span class="swc-switch-mask"></span>
 
           </label>
         </li>
-
-        <li>
+        <li >
           <router-link to="/login" class="btn col me-2" v-if="!userStore.userData"
           :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">Login 
         </router-link>
@@ -73,18 +81,31 @@ defineEmits(['toggleDark'])
 </template>
 
 <style>
+:root {
+  --outline-color: rgb(0, 156, 204);
+}
+li label:hover,
+li button:hover,
+li a:hover {
+  outline: 3px solid var(--outline-color);
+}
+
+.swc-inner:hover {
+  outline: 3px solid var(--outline-color);
+}
 
 .swc-checkbox {
   display: none;
 }
 
 .swc-label {
-  /* background: red; */
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
   cursor: pointer;
+  border-radius: 34px;
+  /* transition: 2.3s; */
 }
 
 .swc-inner {
@@ -93,11 +114,11 @@ defineEmits(['toggleDark'])
   height: 100%;
   background: #030566;
   border-radius: 34px;
-  transition: background 2.3s;
+  transition: 2.3s;
 }
 
 .swc-checkbox:checked + .swc-label .swc-inner {
-  background: #0ea5c0;
+  background: #016b7e;
 }
 
 .swc-switch {
@@ -108,7 +129,8 @@ defineEmits(['toggleDark'])
   height: 30px;
   background: rgb(231, 228, 25);
   border-radius: 50%;
-  transition: left 2.3s;
+  z-index: 0;
+  /* transition: left 2.3s; */
 }
 
 .swc-switch-mask {
@@ -126,7 +148,7 @@ defineEmits(['toggleDark'])
 }
 
 .swc-checkbox:checked + .swc-label .swc-switch {
-  left: 28px;
+  left: 26px;
 }
 
 </style>

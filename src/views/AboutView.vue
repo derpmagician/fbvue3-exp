@@ -39,12 +39,8 @@ const handleSubmit = () => {
   <div class="about">
     <h1>This is an about page</h1>
     <h2>{{userStore.userData}}</h2>
-    <br />
-    <!-- <h3>{{databaseStore.documents}}</h3> -->
-    <!-- <h3>{{databaseStore}}</h3> -->
+
     <div>
-      <!-- {{ databaseStore.documents }}
-      <br />  -->
 
       <form @submit.prevent="handleSubmit">
         <input type="text" placeholder="Ingrese Url" v-model="url" />
