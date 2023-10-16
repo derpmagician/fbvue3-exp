@@ -1,0 +1,1 @@
+import{N as o}from"./index-c9b0f481.js";const c=r=>{let e,s;switch(r){case"credentials":e="Ingrese todos los campos",s="error";break;case"error":e="Ingrese un enlace valido",s="error";break;case"success":e="Enlace añadido",s="success";break}return{triggerToast:()=>{o(e,{type:s,position:"top-right",autoClose:1e3})}}};export{c as u};
