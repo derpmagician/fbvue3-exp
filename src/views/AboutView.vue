@@ -38,7 +38,7 @@ const handleSubmit = () => {
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <h2>{{userStore.userData}}</h2>
+    <h2>{{userStore}}</h2>
 
     <div>
 

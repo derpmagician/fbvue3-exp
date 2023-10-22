@@ -19,7 +19,7 @@ const requireNoAuth = async (to, from, next) => {
   userStore.loading = true;
   const user = await userStore.currentUser();
   if (user) {
-      next("/about");
+      next("/");
   } else {
       next();
   }
@@ -46,6 +46,9 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
+      // route level code-splitting
+      // this generates a separate chunk (Login.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
       component: () => import('../views/Login.vue'),
       beforeEnter: requireNoAuth,
     },{
@@ -53,14 +56,6 @@ const router = createRouter({
       name: 'register',
       component: () => import('../views/Register.vue'),
       beforeEnter: requireNoAuth,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
     },
     {
       path: '/editlink/:id',
@@ -75,8 +70,14 @@ const router = createRouter({
       // beforeEnter: requireAuth,
     },
     {
+      path: '/chat',
+      name: 'chat',
+      component: () => import('../views/Chat.vue'),
+      beforeEnter: requireAuth,
+    },
+    {
       path: '/urlcollection',
-      name: 'Urlcollection',
+      name: 'urlcollection',
       component: () => import('../views/UrlCollection.vue'),
       beforeEnter: requireAuth,
     },
@@ -97,7 +98,13 @@ const router = createRouter({
       name: 'editblog',
       component: () => import('../views/EditBlog.vue'),
       beforeEnter: requireAuth,
-    }
+    },
+    {
+      path: '/myblogposts',
+      name: 'myblogposts',
+      component: () => import('../views/MyBlogPosts.vue'),
+      beforeEnter: requireAuth,
+    },
   ]
 })
 

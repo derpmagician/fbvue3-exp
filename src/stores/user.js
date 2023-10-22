@@ -1,11 +1,13 @@
 // stores/user.js
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-
-import { auth } from "../firebaseConfig";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { db, auth } from "../firebaseConfig";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  signOut, onAuthStateChanged } from "firebase/auth";
+import { collection, getDoc, setDoc, doc} from "firebase/firestore";
 import router from "../router";
 import { useDatabaseStore } from './database';
+import { useChatMsgsStore } from './chatMsgs';
 
 
 export const useUserStore = defineStore('user', () => {
@@ -13,7 +15,7 @@ export const useUserStore = defineStore('user', () => {
   let loadingUser = ref(false)
   let loading = ref(false)
 
-  const registerUser = async (email, password) => {
+  const registerUser = async (email, password, nombre) => {
     loadingUser.value = true;
     try {
       const { user } = await createUserWithEmailAndPassword(
@@ -21,7 +23,14 @@ export const useUserStore = defineStore('user', () => {
         email,
         password
       );
-      userData.value = { email: user.email, uid: user.uid };
+      userData.value = { email: user.email, uid: user.uid, nombre: nombre, };
+          // Crear un documento en Firestore para el usuario
+      await setDoc(doc(db, "users", user.uid), {
+        nombre: nombre,
+        email: user.email,
+        uid: user.uid
+      });
+
       router.push("/");
     } catch (err) {
       console.error(err)
@@ -38,7 +47,7 @@ export const useUserStore = defineStore('user', () => {
         auth, email, password
       );
       userData.value = { email: user.email, uid: user.uid };
-      router.push("/savedlinks");
+      router.push("/");
     } catch (error) {
         if (error.code === 'auth/user-not-found') {
           alert("No se encontró ningún usuario con esa dirección de correo electrónico.");
@@ -48,8 +57,6 @@ export const useUserStore = defineStore('user', () => {
           console.log(error);
           userData.value = null;
         }
-        // console.log(error);
-        // userData.value = null;
     } finally {
         loadingUser.value  = false;
     }
@@ -57,7 +64,7 @@ export const useUserStore = defineStore('user', () => {
 
   const logoutUser = async (email, password) => {
     const databaseStore = useDatabaseStore();
-    // databaseStore.$reset();
+    const chatMsgsStore = useChatMsgsStore();
 
     // loading.value  = true;
     try {
@@ -73,21 +80,25 @@ export const useUserStore = defineStore('user', () => {
 
   const currentUser = () => {
     return new Promise((resolve, reject) => {
-      const unsubcribe = onAuthStateChanged(auth, (user) => {
-          if (user) {
-            userData.value = {
-              email: user.email,
-              uid: user.uid,
-            };
-          } else {
-            userData.value = null;
-            const databaseStore = useDatabaseStore();
-            // databaseStore.$reset();
-          }
-          resolve(user);
-          unsubcribe();
-        }, (e) => reject(e)
-      );
+      const unsubcribe = onAuthStateChanged(auth, async (user) => {
+      
+        if (user) {
+          const userDoc = doc(db, "users", user.uid);
+          const userSnapshot = await getDoc(userDoc);
+          const thiUser = userSnapshot.data();
+          userData.value = {
+            email: user.email,
+            uid: user.uid,
+            nombre: thiUser.nombre
+          };
+        } else {
+          userData.value = null;
+          const databaseStore = useDatabaseStore();
+          // databaseStore.$reset();
+        }
+        resolve(user);
+        unsubcribe();
+      }, (e) => reject(e));
       // Según la documentación, la función onAuthStateChanged() devuelve
       // La función de cancelación de suscripción para el observador
       // unsubcribe();

@@ -70,7 +70,6 @@ const handleSubmit = () => {
     <div v-else>
       <ul > 
         <li v-for="item of blogPostStore.documents" :key="item?.id">
-          <!-- {{item?.date}} -->
           {{ formatTimestamp(item?.date) }}
           {{item?.titulo}} <br /> {{ item?.detalle }}<br />
           <img :src=item?.image class="w-50">

@@ -22,34 +22,34 @@ defineEmits(['toggleDark'])
           </router-link>
         </li>
         <li >
-          <router-link to="/blog" class="btn col me-2" tabindex="1"
+          <router-link to="/blog" class="btn col me-2" tabindex="2"
             :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Blog
           </router-link>
         </li>
+        <li >
+          <router-link to="/chat" class="btn col me-2" tabindex="3"
+            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Chat
+          </router-link>
+        </li>
         <li>
-          <router-link to="/savedlinks" class="btn col me-2" tabindex="2"
+          <router-link to="/savedlinks" class="btn col me-2" tabindex="4"
             :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">My Links
           </router-link>
         </li>
         <li>
-          <router-link to="/cssexperiment" class="btn col me-2"  tabindex="3"
+          <router-link to="/cssexperiment" class="btn col me-2"  tabindex="5"
             :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">Css tricks
           </router-link>
         </li>
         <li>
-          <router-link to="/about" class="btn col me-2"  tabindex="5"
-            :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">About
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/urlcollection" class="btn col me-2"  tabindex="6"
+          <router-link to="/urlcollection" class="btn col me-2"  tabindex="7"
             :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">My Urls
           </router-link>
         </li>
         <li>
           <input type="checkbox" id="swc" class="swc-checkbox"
             :checked="isDark" @change="$emit('toggleDark')">
-          <label for="swc" class="swc-label me-2"  aria-label="cambio de modo oscuro"  tabindex="7">
+          <label for="swc" class="swc-label me-2"  aria-label="cambio a modo oscuro o claro"  tabindex="7">
             <span class="swc-inner"></span>
             <span class="swc-switch"></span>
             <span class="swc-switch-mask"></span>
@@ -58,7 +58,7 @@ defineEmits(['toggleDark'])
         </li>
         <li >
           <router-link to="/login" class="btn col me-2" v-if="!userStore.userData"
-          :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">Login 
+          :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">Login
         </router-link>
         </li>
         <li>

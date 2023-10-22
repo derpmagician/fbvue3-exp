@@ -1,15 +1,14 @@
 // stores/blogPosts.js
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { collection, query, where, getDoc, getDocs,
+import { collection, query, where, getDoc, getDocs, Timestamp,
   addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import { auth } from "@/firebaseConfig";
-import { nanoid } from 'nanoid'
 import dayjs from 'dayjs';
 
 
-export const useBlogPostStore = defineStore('blogpost', () => {
+export const useBlogPostStore = defineStore('blogposts', () => {
 
   let documents = ref([]);
   let loadingDoc = ref(false);
@@ -116,25 +115,16 @@ export const useBlogPostStore = defineStore('blogpost', () => {
 
   const addBlogPost = async (titulo, detalle, image='') => {
     try {
-      let short
-      let exists;
-      do {
-        // Generar un nuevo valor de short
-        short = nanoid(8);
-        const dbToSearch = collection(db, "blog");
-        const q = query(dbToSearch, where("short", "==", short));
-        const querySnapshot = await getDocs(q);
-
-        // Verificar si el valor de short ya existe en la base de datos
-        exists = !querySnapshot.empty;
-      } while (exists);
-      // Ahora, 'short' contiene un valor que no existe en la base de datos
+      // Obtiene la fecha actual como un objeto Date de JavaScript
+      const now = dayjs().toDate();
+      // Convierte el objeto Date a un Timestamp de Firebase
+      const date = Timestamp.fromDate(now);
       const objetoDoc = {
         titulo: titulo,
         detalle: detalle,
         image: image,
         user: auth.currentUser.uid,
-        date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        date: date
       }
       const docRef = await addDoc(collection(db, "blog"), objetoDoc);
       documents.value.push({
