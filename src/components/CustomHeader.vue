@@ -18,12 +18,17 @@ defineEmits(['toggleDark'])
       <ul class="d-flex" v-if="!useUserStore.loading" >
         <li >
           <router-link to="/" class="btn col me-2" tabindex="1"
-            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Home
+            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Inicio
           </router-link>
         </li>
         <li >
           <router-link to="/blog" class="btn col me-2" tabindex="2"
             :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Blog
+          </router-link>
+        </li>
+        <li >
+          <router-link to="/myblogposts" class="btn col me-2" tabindex="2"
+            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Mi Blog Personal
           </router-link>
         </li>
         <li >
@@ -33,7 +38,7 @@ defineEmits(['toggleDark'])
         </li>
         <li>
           <router-link to="/savedlinks" class="btn col me-2" tabindex="4"
-            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">My Links
+            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Mis Links
           </router-link>
         </li>
         <li>
@@ -43,7 +48,7 @@ defineEmits(['toggleDark'])
         </li>
         <li>
           <router-link to="/urlcollection" class="btn col me-2"  tabindex="7"
-            :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">My Urls
+            :class="isDark ? 'btn-outline-primary bd-dark' : 'btn-primary'">Mis Urls
           </router-link>
         </li>
         <li>

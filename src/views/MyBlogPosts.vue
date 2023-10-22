@@ -49,20 +49,32 @@ const handleSubmit = () => {
 </script>
 <template>
   <div class="savedl">
-    <h2>Blog</h2>
+    <h2>Mi Personal Blog</h2>
     <br />
     <div>
 
-      <form @submit.prevent="handleSubmit">
-        <input type="text" placeholder="Ingrese Titulo" v-model="title" /><br/>
-        <input type="text" placeholder="Ingrese Image" v-model="image" /><br/>
-
-        <textarea id="contenido" placeholder="Ingrese Contenido"
-          name="w3review" rows="4" cols="50" v-model="detail">
-
-        </textarea>
-        <button type="submit" class="btn col me-2"
-            :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">Agregar</button>
+      <form @submit.prevent="handleSubmit"
+        class="input-group input-group-sm mb-3 row">
+        <div class="mt-3 col-sm-12">
+          <input class="form-control" type="text"
+            placeholder="Ingrese Titulo" v-model="title" />
+        </div>
+        <div class="mt-3 col-sm-12">
+          <input  class="form-control" type="text"
+            placeholder="Ingrese Image" v-model="image" />
+        </div>
+        <div class="mt-3 col-sm-12">
+          <textarea class="form-control" id="contenido"
+            placeholder="Ingrese Contenido"
+            name="detail" rows="4" v-model="detail">
+          </textarea>
+        </div>
+        <div class="mt-3 d-grid gap-2">
+          <button type="submit" class="btn"
+              :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">
+              Agregar
+          </button>
+        </div>
       </form>
     </div>
 

@@ -29,22 +29,23 @@ const handleSubmit = async () => {
 <template>
 <div class="container">
   <h1>Login</h1>
-  <form @submit.prevent="handleSubmit" class="input-group input-group-sm mb-3 row">
-    <div class="me-2 mt-3 col-sm-12">
-      <input class="form-control"
-        type="email" placeholder="email" v-model.trim="email" required />
+  <form @submit.prevent="handleSubmit"
+    class="input-group input-group-sm mb-3 row">
+    <div class="mt-3 col-sm-12">
+      <input class="form-control" required
+        type="email" placeholder="email"
+        v-model.trim="email"  />
     </div>
-    <div class="me-2 mt-3 col-sm-12">
-      <input class="form-control"
-        type="password"
+    <div class="mt-3 col-sm-12">
+      <input class="form-control" required
+        type="password" 
         placeholder="password"
         v-model.trim="password"
-        required
       />
     </div>
-    <div class="me-2 mt-3 col-sm-12">
+    <div class="mt-3 d-grid gap-2">
       <button type="submit" :disabled="userStore.loadingUser"
-      class="btn w-100"
+        class="btn w-100"
         :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'">
         Acceder</button>
     </div>
