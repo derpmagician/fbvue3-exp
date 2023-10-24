@@ -1,6 +1,8 @@
+// views/Register/vue
 <script setup>
 import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
+import { useTriggerToast } from '@/composables/triggerToast.js';
 const userStore = useUserStore();
 
 const props = defineProps({
@@ -14,8 +16,9 @@ const password = ref("");
 const nombre = ref("");
 
 const handleSubmit = async () => {
-  if (!email.value || password.value.length < 6) {
-    alert("La clave tiene que tener 7 o mas caracteres");
+  if (!nombre.value || !email.value || password.value.length < 6) {
+    const { triggerToast } = useTriggerToast("characters");
+    triggerToast();
   }
 
   await userStore.registerUser(email.value, password.value, nombre.value);
@@ -25,7 +28,7 @@ const handleSubmit = async () => {
 <template>
 <div>
   <h1>Register</h1>
-  <form @submit.prevent="handleSubmit" 
+  <form @submit.prevent="handleSubmit"
     class="input-group input-group-sm mb-3 row">
     <div class="mt-3 col-sm-12">
       <input class="form-control" required
@@ -48,6 +51,7 @@ const handleSubmit = async () => {
         class="btn" :class="isDark ? 'btn-outline-primary  bd-dark ' : 'btn-primary'" >
         Crear cuenta
       </button>
+
     </div>
   </form>
 </div>

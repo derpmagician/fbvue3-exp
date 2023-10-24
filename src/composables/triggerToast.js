@@ -5,6 +5,10 @@ export const useTriggerToast = (toastType) => {
   let msg;
   let type;
   switch(toastType) {
+    case "characters":
+      msg = "La clave tiene que tener 7 o mas caracteres y colocar un nombre"
+      type = "error"
+      break;
     case "credentials":
       msg = "Ingrese todos los campos"
       type = "error"

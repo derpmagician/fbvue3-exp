@@ -29,7 +29,6 @@ const toggleDark = useToggle(isDark)
 <template>
 <CustomHeader :isDark="isDark" @toggleDark="toggleDark"
   class="container my-2 p-4" :class="isDark ? 'bg-dark' : 'bg-light'"/>
-<div>Veamos</div>
 <!-- <div>{{userStore}}</div> -->
 
 <div class="container-fluid">
@@ -50,6 +49,7 @@ const toggleDark = useToggle(isDark)
 
 .bd-light  {
   background: rgb(210, 212, 193);
+  color: black;
 }
 
 </style>
