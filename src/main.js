@@ -1,7 +1,7 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
-import VueChatScroll from 'vue-chat-scroll'
+// import VueChatScroll from 'vue-chat-scroll'
 import  resetStore  from './resetStore'
 import { createPinia } from 'pinia'
 import Toast from 'vue3-toastify';
@@ -11,7 +11,7 @@ import router from './router'
 
 const app = createApp(App);
 
-app.use(VueChatScroll)
+// app.use(VueChatScroll)
 
 const pinia = createPinia()
 pinia.use(resetStore)

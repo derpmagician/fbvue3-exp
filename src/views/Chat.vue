@@ -91,7 +91,7 @@ const handleSubmit = () => {
 <template>
   <h2>Chat Global</h2>
   <div>
-    <div class="chat__window" v-chat-scroll>
+    <div class="chat__window">
       <div v-if="loadingDoc">Loading docs...</div>
       <div v-else>
         <ul >
@@ -121,36 +121,32 @@ const handleSubmit = () => {
 </template>
 
 <style>
-.chat__window {
+/* .chat__window {
   height: 500px;
   outline: 1px saddlebrown solid;
   overflow: auto;
-  scrollbar-width: thin; /* Ancho de la barra de desplazamiento */
-  scrollbar-color: #888 #f1f1f1; /* Color del thumb y del track, respectivamente */
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 }
 
-/* Estilo para la barra de desplazamiento */
 .chat__window::-webkit-scrollbar {
-  width: 10px; /* Ancho de la barra de desplazamiento */
+  width: 10px;
 }
 
-/* Estilo para el track (o riel) de la barra de desplazamiento */
 .chat__window::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color de fondo del track */
+  background: #f1f1f1;
 }
 
-/* Estilo para el thumb (o control deslizable) de la barra de desplazamiento */
 .chat__window::-webkit-scrollbar-thumb {
-  background: #888; /* Color de fondo del thumb */
-  border-radius: 10px; /* Radio de las esquinas del thumb */
+  background: #888;
+  border-radius: 10px;
 }
 
-/* Estilo para el thumb cuando se pasa el mouse por encima */
 .chat__window::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color de fondo del thumb cuando se pasa el mouse por encima */
+  background: #555;
 }
 
 .chat__user {
   font-size: 0.8rem;
-}
+} */
 </style>

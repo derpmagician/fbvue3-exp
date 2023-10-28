@@ -6,8 +6,6 @@ import {
   addDoc, doc, deleteDoc, updateDoc,arrayUnion } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import { auth } from "@/firebaseConfig";
-import { nanoid } from 'nanoid'
-
 
 export const useUrlStore = defineStore('colUrls', () => {
   let documents = ref([]);
@@ -61,14 +59,7 @@ export const useUrlStore = defineStore('colUrls', () => {
     try {
       const dbToSearch = collection(db, "colUrls");
       let short
-      let exists;
-      do {
-        short = nanoid(8);
-        const q = query(dbToSearch, where("shortUrl", "==", short));
-        const querySnapshot = await getDocs(q);
-        // Verificar si el valor de short ya existe en la base de datos
-        exists = !querySnapshot.empty;
-      } while (exists);
+
       // Verificar si longUrl ya existe en la base de datos
       const longUrlQuery = query(collection(db, "colUrls"), where("longUrl", "==", longUrl));
       const longUrlQuerySnapshot = await getDocs(longUrlQuery);
@@ -94,17 +85,25 @@ export const useUrlStore = defineStore('colUrls', () => {
         // Si longUrl no existe, crear un nuevo documento
         const objetoDoc = {
           longUrl: longUrl,
-          shortUrl: short,
           users: [auth.currentUser.uid]
         };
-  
+    
+        // Crear el documento y obtener su ID
         const docRef = await addDoc(dbToSearch, objetoDoc);
-        documents.value.push({
-          id: docRef.id,
-          ...objetoDoc
+        const id = docRef.id;
+    
+        // Actualizar el documento con el shortUrl
+        await updateDoc(docRef, {
+          shortUrl: id
         });
-        // console.log("Document written with ID: ", docRef.id);
-      }
+    
+        documents.value.push({
+          id: id,
+          ...objetoDoc,
+          shortUrl: id
+        });
+    }
+    
 
     } catch (e) {
       console.log(e);
