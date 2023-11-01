@@ -6,6 +6,8 @@ import { useUserStore } from '@/stores/user';
 import { collection, query, orderBy, limit, onSnapshot, addDoc, doc, Timestamp } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import dayjs from 'dayjs';
+import ChatList from '@/components/ChatList.vue'
+
 
 const props = defineProps({
   isDark: {
@@ -93,19 +95,23 @@ const handleSubmit = () => {
   <div>
     <div class="chat__window">
       <div v-if="loadingDoc">Loading docs...</div>
-      <div v-else>
-        <ul >
-          <li  v-for="item, of reversedDocuments"
+      <!-- <div v-else> -->
+        <ul v-else >
+          <ChatList :reversedDocuments="reversedDocuments"/>
+          <!-- <li  v-for="item, of reversedDocuments"
             :key="`${item?.createdAt.seconds}${item?.createdAt.nanoseconds}`" >
             <div class="mt-2 me-2 py-1 chat__user"
-              :class="item.sender === userStore.userData.nombre ? 'text-end' : 'text-start'" >
-              <span class="bg-success text-white rounded-2 px-2 py-1">{{item?.sender}}</span> {{ formatTimestamp(item?.createdAt) }}
+              :class="item.sender === userStore.userData?.nombre ? 'text-end' : 'text-start'" >
+              <span class="bg-success text-white rounded-2 px-2 py-1">
+                {{item?.sender}}
+              </span>
+              {{ formatTimestamp(item?.createdAt) }}
               <div class="" >{{item?.msg}}</div>
             </div>
             
-          </li>
+          </li> -->
         </ul>
-      </div>
+      <!-- </div> -->
     </div>
     <form @submit.prevent="handleSubmit" class="input-group input-group-sm mb-3 row">
       <div class="mt-3 col-sm-12">
@@ -121,14 +127,14 @@ const handleSubmit = () => {
 </template>
 
 <style>
-/* .chat__window {
+.chat__window {
   height: 500px;
   outline: 1px saddlebrown solid;
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
 }
-
+/* 
 .chat__window::-webkit-scrollbar {
   width: 10px;
 }

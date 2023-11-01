@@ -21,7 +21,7 @@ export const useChatMsgsStore = defineStore('chatmsgs', () => {
   const getAllMsgs = () => {
     loadingDoc.value = true;
     try {
-      const q = query(collection(db, "chats"), orderBy('createdAt', "desc"), limit(7));
+      const q = query(collection(db, "chats"), orderBy('createdAt', "desc"), limit(17));
       unsubscribe = onSnapshot(q, (querySnapshot) => {
         documents.value = querySnapshot.docs.map(doc => ({
           id: doc.id,

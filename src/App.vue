@@ -38,7 +38,7 @@ const toggleDark = useToggle(isDark)
 <style>
 
 .bd-dark  {
-  background: rgb(4, 21, 95);
+  background: #233938;
   color: white;
 }
 

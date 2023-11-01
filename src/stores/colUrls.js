@@ -14,7 +14,8 @@ export const useUrlStore = defineStore('colUrls', () => {
   const getColUrls = async () => {
     loadingDoc.value = true;
     try {
-      const q = query(collection(db, "colUrls"), where("users", "array-contains", auth.currentUser.uid));
+      const dbToSearch = collection(db, "colUrls");
+      const q = query(dbToSearch, where("users", "array-contains", auth.currentUser.uid));
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -58,10 +59,9 @@ export const useUrlStore = defineStore('colUrls', () => {
   const addColUrl = async (longUrl) => {
     try {
       const dbToSearch = collection(db, "colUrls");
-      let short
 
       // Verificar si longUrl ya existe en la base de datos
-      const longUrlQuery = query(collection(db, "colUrls"), where("longUrl", "==", longUrl));
+      const longUrlQuery = query(dbToSearch, where("longUrl", "==", longUrl));
       const longUrlQuerySnapshot = await getDocs(longUrlQuery);
       if (!longUrlQuerySnapshot.empty) {
         // Si longUrl ya existe, agregar auth.currentUser.uid a users

@@ -14,7 +14,7 @@ defineEmits(['toggleDark'])
 
 <template>
   <header >
-    <nav class="row " >
+    <nav class="navbar navbar-expand-md expand-sm row " >
       <ul class="d-flex" v-if="!useUserStore.loading" >
         <li >
           <router-link to="/" class="btn col me-2" tabindex="1"

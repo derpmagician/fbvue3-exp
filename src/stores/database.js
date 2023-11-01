@@ -4,7 +4,6 @@ import { defineStore } from 'pinia'
 import { collection, query, where, getDoc, getDocs, addDoc, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import { auth } from "@/firebaseConfig";
-import { nanoid } from 'nanoid'
 
 export const useDatabaseStore = defineStore('database', () => {
 
@@ -13,8 +12,9 @@ export const useDatabaseStore = defineStore('database', () => {
 
   const getUrls = async () => {
     loadingDoc.value = true;
+    const dbToSearch = collection(db, "urls");
     try {
-      const q = query(collection(db, "urls"), where("user", "==", auth.currentUser.uid));
+      const q = query(dbToSearch, where("user", "==", auth.currentUser.uid));
 
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -86,28 +86,23 @@ export const useDatabaseStore = defineStore('database', () => {
 
   const addUrl = async (name) => {
     try {
-      let short
-      let exists;
-      do {
-        // Generar un nuevo valor de short
-        short = nanoid(8);
-        const dbToSearch = collection(db, "urls");
-        const q = query(dbToSearch, where("short", "==", short));
-        const querySnapshot = await getDocs(q);
+      const dbToSearch = collection(db, "urls");
 
-        // Verificar si el valor de short ya existe en la base de datos
-        exists = !querySnapshot.empty;
-      } while (exists);
-      // Ahora, 'short' contiene un valor que no existe en la base de datos
       const objetoDoc = {
         name: name,
-        short: short,
         user: auth.currentUser.uid
       }
-      const docRef = await addDoc(collection(db, "urls"), objetoDoc);
+      const docRef = await addDoc(dbToSearch, objetoDoc);
+      const id = docRef.id;
+
+      await updateDoc(docRef, {
+        short: id
+      });
+      
       documents.value.push({
         ...objetoDoc,
-        id: docRef.id,
+        id: id,
+        short: id,
       })
       // console.log("Document written with ID: ", docRef.id);
 
